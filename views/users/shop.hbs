@@ -99,9 +99,9 @@
                     <div class="col-lg-4 col-sm-">
                         <div class="single_product_item" style="height:33em ;">
                             <img src="/product-images/{{this._id}}.jpg" alt="" style="height:20em ;"
-                                onclick="window.location='http://localhost:3000/single-product{{this._id}}';">
+                                onclick="window.location='https://abinbabu.com/single-product{{this._id}}';">
                             <div class="single_product_text">
-                                <h4 onclick="window.location='http://localhost:3000/';">{{this.productName}}</h4>
+                                <h4 onclick="window.location='https://abinbabu.com/';">{{this.productName}}</h4>
                                 {{#if this.offerId}}
                                 <h3> <span class="badge badge-pill badge-light">{{this.dPercentage}}% Off</span>
                                     <s> Rs {{this.MRP}}</s>
@@ -117,7 +117,7 @@
                                 <button type="button" class="btn btn-primary btn-sm" onclick="addToCart('{{this._id}}')">+ Add to cart</button>
                                 {{!-- <a href="/add-to-cart/{{this._id}}" class="add_cart">+ add to cart<i class="ti-heart"></i></a> --}}
                                 {{else}}
-                                <button type="button" class="btn btn-primary btn-sm" onclick="location.href='http://localhost:3000/login'">+ Add to cart</button>
+                                <button type="button" class="btn btn-primary btn-sm" onclick="location.href='https://abinbabu.com/login'">+ Add to cart</button>
                                 {{/if}}
                             </div>
                         </div>
