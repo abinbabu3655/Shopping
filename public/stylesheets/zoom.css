@@ -1,0 +1,27 @@
+
+
+#featured{
+	max-width: 500px;
+	max-height: 600px;
+
+	cursor: pointer;
+
+}
+
+
+#img-container{
+	z-index: 1;
+	max-width: 500px;
+	position: relative;
+}
+
+#lens{
+	z-index: 2;
+	position: absolute;
+
+	height: 125px;
+	width: 125px;
+	background-repeat: no-repeat;
+	cursor: none;
+
+}

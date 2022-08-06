@@ -1,0 +1,60 @@
+<!--================Cart Area =================-->
+<section class="cart_area padding_top" style="background-color:#ecfdff;">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive" >
+                <table class="table  table-striped" style="background-color: #DBDFFD; border: 20px; border-radius:20px ;">
+                    <thead>
+                        <tr>
+
+                            <th scope="col">Product</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Discription</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each products}}
+                        <tr>
+                            
+                                <td>
+                                    <div class="d-flex justify-content-center">
+                                    {{this.product.productName}}</td>
+                            </div>
+                            
+
+                            <td>
+                                <div class="d-flex justify-content-center media">
+                                    <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
+                                        class="pull-up" style="height: ;5em width: 5e;" title="{{this.product.productName}}">
+                                        <img src="/product-images/{{this.product._id}}.jpg" style="width: 7em; height: 7em;" />
+                                    </li>
+                                </ul>
+                                </div>
+                                
+                            </td>
+                            <td>
+                                <div class="product_count d-flex justify-content-center">
+                                    <p>{{this.product.price}}</p>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-center">
+                                    <h5>{{this.product.description}}</h5>
+                                </div>
+                                
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="checkout_btn_inner float-right">
+                    <a class="btn_1" href="/shop">Continue Shopping</a>
+
+                </div>
+            </div>
+        </div>
+</section>
+<!--================End Cart Area =================-->

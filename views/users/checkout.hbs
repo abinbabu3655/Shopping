@@ -1,0 +1,622 @@
+<!--================Checkout Area =================-->
+<section class="checkout_area padding_top">
+    <div class="container">
+       
+        
+
+
+
+        <div class="billing_details row">
+            
+
+
+            <div class="col-lg-8">
+                <div class="cupon_area">
+            <div class="check_title">
+                <h2>Apply Coupon
+                    {{!-- Have a coupon?
+                    <a href="#">Click here to enter your code</a> --}}
+                </h2>
+            </div>
+            
+            <form id="apply-coupon-form" action="/user/apply-coupon" method="post">
+            <input type="text" name="total" value="{{total}}" hidden>
+            
+            {{#if value}}
+            <br>
+            <p>Coupon Applied -{{value}}</p>
+            <br>
+           {{!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> --}}
+            
+            {{else}}
+            <input  type="text" placeholder="Enter coupon code" name="coupon" style="text-transform:uppercase" oninput="this.value = this.value.toUpperCase()" id="CouponV"/>
+             <span class="text-danger" style="font-size: small;" id="ERR"></span><br><br>
+            <button type="submit" class="tp_btn" onclick="return Coupon()">Apply Coupon</buttun>
+            {{/if}}
+            </form>
+            {{#if value}}
+            <button class="tp_btn" onclick="removeCoupon('{{user._id}}')">Remove Coupon</button>
+            {{/if}}
+            
+        </div>
+
+                <div class="">
+                    <h3>Shipping Address
+                    </h3>
+                    <button type="button" class="tp_btn mb-3" data-toggle="modal" data-target="#exampleModal">
+                        Saved Addresses
+                    </button>
+                    <form class="row contact_form" id="checkout-form">
+                        <div class="col-md-6 form-group">
+                            <input type="text" class="form-control" id="fName" name="fName" placeholder="First name" value="{{savedAddress.fName}}"
+                                onkeyup="validatefName()" />
+                            <p id="fnameerr" class="text-danger"></p>
+
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="lName" name="lName" placeholder="Last name" value="{{savedAddress.lName}}"
+                                onkeyup="validatelName()" />
+                            <p id="lnameerr" class="text-danger"></p>
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="number" class="form-control" id="mob" name="mobile" onkeyup="validateMobile()" value="{{savedAddress.number}}"
+                                placeholder="Mobile number" />
+                            <p id="moberr" class="text-danger"></p>
+
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="email" class="form-control" id="email" name="email" onkeyup="validateEmail()" value="{{savedAddress.email}}"
+                                placeholder="Email Address" />
+                            <p id="emailerr" class="text-danger"></p>
+
+
+                        </div>
+                        {{!-- <div class="col-md-12 form-group p_star">
+                            <select class="country_select">
+                                <option value="1">Country</option>
+                                <option value="2">Country</option>
+                                <option value="4">Country</option>
+                            </select>
+                        </div> --}}
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="add1" name="add1" onkeyup="validateAdd1()" value="{{savedAddress.add1}}"
+                                placeholder="Address line 01" />
+                            <p id="add1err" class="text-danger"></p>
+
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="add2" name="add2" onkeyup="validateAdd2()" value="{{savedAddress.add2}}"
+                                placeholder="Address line 02" />
+                            <p id="add2err" class="text-danger"></p>
+
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="city" name="city" placeholder="Town/City" value="{{savedAddress.city}}"
+                                onkeyup="validateTown()" />
+                            <p id="cityerr" class="text-danger"></p>
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="district" name="district" value="{{savedAddress.district}}"
+                                onkeyup="validateDistrict()" placeholder="District" />
+                            <p id="districterr" class="text-danger"></p>
+
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="state" name="state" placeholder="State" value="{{savedAddress.state}}"
+                                onkeyup="validateState()" />
+                            <p id="stateerr" class="text-danger"></p>
+                        </div>
+                        {{!-- <div class="col-md-12 form-group p_star">
+                            <select class="country_select">
+                                <option value="1">District</option>
+                                <option value="2">District</option>
+                                <option value="4">District</option>
+                            </select>
+                        </div> --}}
+                        <div class="col-md-12 form-group">
+                            <input type="number" class="form-control" id="zip" name="zip" placeholder="Postcode/ZIP" value="{{savedAddress.zip}}"
+                                onkeyup="validateZip()" />
+                            <p id="ziperr" class="text-danger"></p>
+                        </div>
+                        {{!-- <div class="col-md-12 form-group">
+                            <div class="creat_account">
+                                <input type="checkbox" id="f-option2" name="selector" />
+                                <label for="f-option2">Create an account?</label>
+                            </div>
+                        </div> --}}
+                        <div class="col-md-12 form-group">
+                            {{!-- <div class="creat_account">
+                                <h3>Shipping Details</h3>
+                                <input type="checkbox" id="f-option3" name="selector" />
+                                <label for="f-option3">Ship to a different address?</label>
+                            </div> --}}
+                            <textarea class="form-control" name="message" id="message" rows="1"
+                                placeholder="Order Notes" onkeyup="validateMessage()"></textarea>
+                            <p id="messageerr" class="text-danger"></p>
+                        </div>
+                        <input type="text" name="userId" id="" value="{{user._id}}" hidden>
+
+                    </form>
+                </div>
+
+            </div>
+            <div class="col-lg-4">
+                <div class="order_box">
+                    <h2>Your Order</h2>
+                    <ul class="list">
+                        <li>
+                            <a href="#">Product
+                                
+                                <span>SubTotal</span>
+                                <span class="pr-5">Quantity</span>
+                            </a>
+                        </li>
+                        {{#each subTotal}}
+                        <li>
+                            <a>{{this.product.productName}}
+                                
+                                <span class="middle">{{this.quantity}}*{{this.product.price}} </span>
+                                <span class="start"></span>
+                                
+                                <span class="last">{{this.Subtotal}}</span>
+                                
+                            </a>
+                        </li>
+                        {{/each}}
+
+                    </ul>
+                    <ul class="list list_2">
+                        <li>
+                            <a>Shipping
+                                <span>Free</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a>Total
+                                <span><s>{{totalMrp}}</s></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a>Saved
+                                <span>{{discount}}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">Grand Total
+                                <span>{{total}}</span>
+                            </a>
+                        </li>
+
+
+                    </ul>
+                    <div class="payment_item">
+                        <div class="radion_btn ">
+                            <input type="radio" id="f-option5" name="paymentMethod" value="COD" checked="checked"
+                                form="checkout-form" />
+                            <label for="f-option5">COD</label>
+                            <div class="check"></div>
+                        </div>
+                        <p>
+                            Please select online payment methods for contactless delivery
+                        </p>
+                    </div>
+                    <div class="payment_item active">
+                        <div class="radion_btn">
+                            <input type="radio" id="f-option6" name="paymentMethod" value="razorpay"
+                                form="checkout-form" />
+                            <label for="f-option6">Razorpay </label>
+                            <img src="assets/img/product/single-product/card.jpg" alt="" />
+                            <div class="check"></div>
+                        </div>
+                        <p>
+                            Please send a check to Store Name, Store Street, Store Town,
+                            Store State / County, Store Postcode.
+                        </p>
+                    </div>
+                    <div class="payment_item active">
+                        <div class="radion_btn">
+                            <input type="radio" id="f-option7" name="paymentMethod" value="paypal"
+                                form="checkout-form" />
+                            <label for="f-option7">Paypal </label>
+                            <img src="assets/img/product/single-product/card.jpg" alt="" />
+                            <div class="check"></div>
+                        </div>
+                        <p>
+                            Please send a check to Store Name, Store Street, Store Town,
+                            Store State / County, Store Postcode.
+                        </p>
+                    </div>
+                    <div class="mt-3">
+                        <button class="btn btn-primary  " form="checkout-form" type="submit"
+                            onclick="return validation()">Place Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{!--
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script> --}}
+    <script>
+
+        $("#checkout-form").submit((e) => {
+            e.preventDefault()
+            $.ajax({
+                url: '/place-order',
+                method: 'post',
+                data: $('#checkout-form').serialize(),
+                success: (response) => {
+                    if (response.codSuccess) {
+
+                        swal('Order Placed').then(() => {
+                            location.href = "http://localhost:3000/order-success"
+                        })
+                    } else if (response.onlineSuccess) {
+                        razorpayPayment(response.response)
+                    } else {
+
+                        for (let i = 0; i < response.links.length; i++) {
+                            if (response.links[i].rel === 'approval_url') {
+                                location.href = (response.links[i].href);
+                            }
+                        }
+                    }
+                }
+            })
+
+        })
+
+        function razorpayPayment(order) {
+            console.log(order.amount)
+            var options = {
+                "key": "rzp_test_c7Of720IRAmiHx", // Enter the Key ID generated from the Dashboard
+                "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                "currency": "INR",
+                "name": "Furno",
+                "description": "Test Transaction",
+                "image": "https://example.com/your_logo",
+                "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                "handler": function (response) {
+                    verifyPayment(response, order)
+                },
+                "prefill": {
+                    "name": "Gaurav Kumar",
+                    "email": "gaurav.kumar@example.com",
+                    "contact": "9999999999"
+                },
+                "notes": {
+                    "address": "Razorpay Corporate Office"
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+
+        }
+
+
+    </script>
+
+    <script>
+        function verifyPayment(payment, order) {
+            $.ajax({
+                url: '/verify-payment',
+                data: {
+                    payment,
+                    order
+                },
+                method: 'post',
+                success: (response) => {
+                    if (response.status) {
+                        swal('Order Placed').then(() => {
+                            location.href = "http://localhost:3000/order-success"
+
+                        })
+                    } else {
+                        swal('payment failed')
+                    }
+                }
+            })
+        }
+    </script>
+
+
+
+
+
+
+    <script>
+        function validatefName() {
+            const messg = document.getElementById("fnameerr")
+            const con = document.getElementById("fName").value
+            if (con == "") {
+                messg.innerHTML = "| Fill The Fields"
+                return false;
+            }
+            if (!con.match(/^[a-zA-Z-" "]*$/)) {
+                messg.innerHTML = "| Only Alphabets Are Allowed"
+                return false;
+            }
+            messg.innerHTML = ""
+            return true;
+        }
+        function validatelName() {
+            const messg = document.getElementById("lnameerr")
+            const con = document.getElementById("lName").value
+            if (con == "") {
+                messg.innerHTML = "| Fill The Fields"
+                return false;
+            }
+            if (!con.match(/^[a-zA-Z-" "]*$/)) {
+                messg.innerHTML = "| Only Alphabets Are Allowed"
+                return false;
+            }
+            messg.innerHTML = ""
+            return true;
+        }
+        function validateMobile() {
+            const messg = document.getElementById("moberr")
+            const name = document.getElementById('mob').value
+            if (name == "" || name == null) {
+                messg.innerHTML = "Enter a mobile number"
+                return false
+            } else if
+                (name.length < 10 || name.length > 10) {
+                messg.innerHTML = "Enter a Valid Mobile number"
+                return false
+            }
+
+            messg.innerHTML = null
+            return true
+        }
+        function validateEmail() {
+            const messg = document.getElementById("emailerr")
+            const name = document.getElementById('email').value
+            if (name == "") {
+                messg.innerHTML = "Enter you email address"
+                return false
+
+
+            } else if
+                (!name.match(/^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/)) {
+                messg.innerHTML = 'Enter a proper email adress'
+                return false
+            }
+
+            messg.innerHTML = null
+            return true
+        }
+        function validateAdd1() {
+            const messg = document.getElementById("add1err")
+            const con = document.getElementById("add1").value
+            if (con == "") {
+                messg.innerHTML = "| Fill The Fields"
+                return false;
+            }
+            messg.innerHTML = ""
+            return true;
+        }
+        function validateAdd2() {
+            const messg = document.getElementById("add2err")
+            const con = document.getElementById("add2").value
+            if (con == "") {
+                messg.innerHTML = "| Fill The Fields"
+                return false;
+            }
+            messg.innerHTML = ""
+            return true;
+        }
+
+        function validateTown() {
+            const messg = document.getElementById("cityerr")
+            const con = document.getElementById("city").value
+            if (con == "") {
+                messg.innerHTML = "| Fill The Fields"
+                return false;
+            }
+            messg.innerHTML = ""
+            return true;
+        }
+        function validateDistrict() {
+            const messg = document.getElementById("districterr")
+            const con = document.getElementById("district").value
+            if (con == "") {
+                messg.innerHTML = "Enter District"
+                return false;
+            }
+            messg.innerHTML = ""
+            return true;
+        }
+        function validateState() {
+            const messg = document.getElementById("stateerr")
+            const con = document.getElementById("state").value
+            if (con == "") {
+                messg.innerHTML = "Enter State"
+                return false;
+            }
+            messg.innerHTML = ""
+            return true;
+        }
+
+        function validateZip() {
+            const messg = document.getElementById("ziperr")
+            const name = document.getElementById('zip').value
+            if (name == "" || name == null) {
+                messg.innerHTML = "Enter Pincode"
+                return false
+            } else if
+                (name.length < 6 || name.length > 6) {
+                errorMobileNumber.innerHTML = "Enter a Valid Pincode"
+                return false
+            }
+
+            messg.innerHTML = null
+            return true
+        }
+        function validateMessage() {
+            const messg = document.getElementById("messageerr")
+            const con = document.getElementById("message").value
+            if (con == "") {
+                messg.innerHTML = "Enter Message"
+                return false;
+            }
+            messg.innerHTML = ""
+            return true;
+        }
+        function validation() {
+            if (!validatefName() || !validatelName() || !validateMobile() || !validateEmail() || !validateAdd1() || !validateAdd2() || !validateTown() || !validateDistrict() || !validateState() || !validateZip() || !validateMessage()) {
+                return false;
+            }
+            return true;
+        }
+
+
+    </script>
+
+
+    <!-- Button trigger modal -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="overflow-auto" style="height: 200px;">
+                        {{#each Addresses}}
+                        <div class="card" style="width: 51em;">
+
+                            <div class="card-body">
+                                <form action="/fill-address" id="form-address" method="post">
+                                    <h6 class="card-subtitle mb-2 text-muted">{{this.addresses.fName}}
+                                        {{this.addresses.lName}}
+                                    </h6>
+                                    <p>Mobile : {{this.addresses.number}}</p>
+                                    <p>Email : {{this.addresses.email}},</p>
+                                    <p>Add :
+                                        {{this.addresses.add1}},{{this.addresses.add2}},{{this.addresses.city}},{{this.addresses.district}},{{this.addresses.state}}
+                                    </p>
+                                    <p>Pincode :{{this.addresses.zip}}</p>
+                                    
+                                    <input type="text" value="{{this.addresses._id}}" name="addressId" hidden>
+                                    <input type="text" value="{{this.addresses.fName}}" name="fName" hidden>
+                                    <input type="text" value="{{this.addresses.lName}}" name="lName" hidden>
+                                    <input type="text" value="{{this.addresses.number}}" name="number" hidden>
+                                    <input type="text" value="{{this.addresses.email}}" name="email" hidden>
+                                    <input type="text" value="{{this.addresses.add1}}" name="add1" hidden>
+                                    <input type="text" value="{{this.addresses.add2}}" name="add2" hidden>
+                                    <input type="text" value="{{this.addresses.city}}" name="city" hidden>
+                                    <input type="text" value="{{this.addresses.district}}" name="district" hidden>
+                                    <input type="text" value="{{this.addresses.state}}" name="state" hidden>
+                                    <input type="text" value="{{this.addresses.zip}}" name="zip" hidden>
+                                    <button class="btn tp_btn" type="submit" >Select</button>
+                                </form>
+
+                            </div>
+                        </div>
+                        <br>
+                        {{/each}}
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+
+
+<script>
+    $('#apply-coupon-form').submit((e)=>{
+    e.preventDefault()
+    console.log('callllllllllllllllll');
+    $.ajax({
+    
+        url:'/apply-coupon',
+        method:'post',
+        data:$('#apply-coupon-form').serialize(),
+        success:(response)=>{
+            console.log('111111111111111111111111111111111')
+            
+            if(response.equal){
+                let ERR=document.getElementById('ERR')
+                ERR.innerHTML='COUPON ALLREADY USED'
+                
+            }
+            else if(response.notequal){
+                let ERR=document.getElementById('ERR')
+                ERR.innerHTML='ONLY ONE COUPON IS APPLICABLE'   
+            }else{
+                if(response.status){
+                    let ERR=document.getElementById('ERR')
+                    ERR.innerHTML="COUPON ALLREADY USED"
+                    
+                }
+                else if(response.notFound){
+                    let ERR=document.getElementById('ERR')
+                    ERR.innerHTML="INVALID COUPON"
+                    
+                }
+                else{
+                    if(response.Expired){
+                        let ERR=document.getElementById('ERR')
+                        ERR.innerHTML='COUPON EXPIRED'
+                        
+                    }else{
+                        location.reload()
+                    }
+                   
+                   
+                    
+                }
+            }
+           
+           
+        }
+    })
+})
+</script>
+
+
+
+
+        <script>
+        function Coupon(){
+            let ERR=document.getElementById('ERR')
+            let Coupon=document.getElementById('CouponV').value
+            if(Coupon==""){
+                ERR.innerHTML="PLEASE FILL THE COUPON"
+                return false;
+            }
+            ERR.innerHTML=""
+            return true
+        }
+    </script>
+
+<script>
+    function removeCoupon(cartId) {
+    $.ajax({
+        url: '/remove-coupon/' +cartId,
+        method: 'post',
+        success: (response) => {
+            swal('Coupon Removed').then(()=>{
+                location.reload()
+            })
+            
+
+        }
+    })
+}
+</script>
+
+
+    

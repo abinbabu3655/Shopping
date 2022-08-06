@@ -1,0 +1,199 @@
+<section style="background-color: #eee;" class="pt-5">
+    <div class="container pt-5 py-5">
+
+        <div class="row">
+
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                            alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                        <h5 class="my-3">{{user.name}}</h5>
+
+
+                    </div>
+                </div>
+                <div class="card mb-4 mb-lg-0">
+                    <div class="card-body p-0">
+                        <ul class="list-group list-group-flush rounded-3">
+                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                <a class="" href="/orders">Orders</a>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                <a href="/user-address">Address</a>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                <a href="/change-password">Change Password</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="">
+                                <p class="p-3">Profile</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Name</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{user.name}}</p>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Email</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{user.email}}</p>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Mobile</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{user.mobile}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                            Edit
+                        </button>
+
+                    </div>
+                </div>
+                <div class="row">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-profile-form">
+                        <div class="form-outline mb-4">
+                            <input type="text" id="name" class="form-control" name="name" value="{{user.name}}"
+                                onkeyup="validateName()" />
+                            <label class="form-label" for="form1Example2">Name</label>
+                            <p id="nameerr" class="text-danger"></p>
+                        </div>
+                        <!-- Email input -->
+                        <div class="form-outline mb-4">
+                            <input type="email" id="email" class="form-control" name="email" value="{{user.email}}"
+                                onkeyup="validateEmail()" />
+                            <label class="form-label" for="form1Example1">Email address</label>
+                            <p id="emailerr" class="text-danger"></p>
+                        </div>
+
+                        <!-- Password input -->
+                        <div class="form-outline mb-4">
+                            <input type="text" id="mob" class="form-control" name="mobile" value="{{user.mobile}}"
+                                onkeyup="validateMobile()" />
+                            <label class="form-label" for="form1Example2">Mobile</label>
+                            <p id="moberr" class="text-danger"></p>
+                        </div>
+
+                        <!-- 2 column grid layout for inline styling -->
+
+                        <input type="text" name="userId" id="" value="{{user._id}}" hidden>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" form="edit-profile-form"
+                        onclick="return validation()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        function validateName() {
+            const messg = document.getElementById("nameerr")
+            const con = document.getElementById("name").value
+            if (con == "") {
+                messg.innerHTML = "| Fill The Fields"
+                return false;
+            }
+            if (!con.match(/^[a-zA-Z-" "]*$/)) {
+                messg.innerHTML = "| Only Alphabets Are Allowed"
+                return false;
+            }
+            messg.innerHTML = ""
+            return true;
+        }
+
+        function validateMobile() {
+            const messg = document.getElementById("moberr")
+            const name = document.getElementById('mob').value
+            if (name == "" || name == null) {
+                messg.innerHTML = "Enter a mobile number"
+                return false
+            } else if
+                (name.length < 10 || name.length > 10) {
+                messg.innerHTML = "Enter a Valid Mobile number"
+                return false
+            }
+
+            messg.innerHTML = null
+            return true
+        }
+        function validateEmail() {
+            const messg = document.getElementById("emailerr")
+            const name = document.getElementById('email').value
+            if (name == "") {
+                messg.innerHTML = "Enter you email address"
+                return false
+
+
+            } else if
+                (!name.match(/^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/)) {
+                messg.innerHTML = 'Enter a proper email adress'
+                return false
+            }
+
+            messg.innerHTML = null
+            return true
+        }
+
+        function validation() {
+            if (!validateName() || !validateMobile() || !validateEmail()) {
+                return false;
+            }
+            return true;
+        }
+
+    </script>

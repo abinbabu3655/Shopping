@@ -1,0 +1,31 @@
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+
+<div class="container d-flex justify-content-center align-items-center mt-5" style=" min-height:40rem ;">
+    <div class="position-relative col-md-3 d-flex justify-content-center" >
+        <div class="card p-2 text-center" style="background-color: #ecfdff;" >
+            <h6>Mobile phone verification</h6>
+            <div>
+                <span id="code">Enter the code we just send on your mobile<br />
+                    phone
+                </span>
+                {{#if otpErr}}
+                <p class="text-danger">{{otpErr}}</p>
+                {{/if}}
+                <small style="font-weight: bold ;">+91{{Number}}</small>
+            </div>
+            <form action="/otp-verify" method="post">
+                <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
+                   <input type="number" name="number" maxlength="4">
+                </div>
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-info px-4 validate" >Validate</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>

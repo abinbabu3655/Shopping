@@ -1,0 +1,80 @@
+<!--================Cart Area =================-->
+<section class="cart_area padding_top" style="background-color:#ecfdff;">
+  <div class="container">
+    <div class="cart_inner">
+      <div class="table-responsive">
+        <table class="table table-striped" style="background-color: #DBDFFD; border: 20px; border-radius:20px ;">
+          <thead>
+            <tr>
+
+              <th scope="col">Date</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Payment Method</th>
+              <th scope="col">OrderStatus</th>
+              <th>View Products</th>
+              <th>Cancel Order</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each orders}}
+            {{#notEquals this.status 'pending'}}
+            <tr>
+
+              <td>
+                <div class="d-flex justify-content-center">
+                  <p>{{this.date}}</p>
+                </div>
+              </td>
+              {{!-- <td>
+                <div class="">
+                  <div class="">
+                    <p>{{this.deliveryDetails.address.add1}},</p>
+                    <p>{{this.deliveryDetails.address.add2}},</p>
+                    <p>{{this.deliveryDetails.address.city}},</p>
+                    <p>{{this.deliveryDetails.address.district}},</p>
+                    <p>{{this.deliveryDetails.address.state}},</p>
+                    <p>{{this.deliveryDetails.address.zip}}</p>
+                  </div>
+                </div>
+              </td> --}}
+              <td>
+                <div class="product_count d-flex justify-content-center ">
+                  <p>{{this.total}}</p>
+                </div>
+              </td>
+              <td>
+                <div class="">
+                  <h5>{{this.paymentMethod}}</h5>
+                </div>
+
+              </td>
+              <td>
+                <h5>{{this.status}}</h5>
+              </td>
+              <td>
+                <div class="d-flex justify-content-center">
+                  <a class="btn_1 checkout_btn_1" href="/view-order-products{{this._id}}">View Products</a>
+                </div>
+              </td>
+              
+              <td>
+                <div class="d-flex justify-content-center pb-1">
+                  {{#notEquals this.status 'cancelled'}}
+                  <button class="btn btn-danger " type="button" style="border-radius:20px ;" onclick="cancelOrder('{{this._id}}')">Cancel</button>
+                  {{/notEquals}}
+              </div>
+                
+              </td>
+            </tr>
+            {{/notEquals}}
+            {{/each}}
+          </tbody>
+        </table>
+        <div class="checkout_btn_inner float-right pb-3">
+          <a class="btn_1" href="/shop">Continue Shopping</a>
+
+        </div>
+      </div>
+    </div>
+</section>
+<!--================End Cart Area =================-->

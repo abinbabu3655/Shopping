@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    {{!-- login-page.css --}}
+    <link rel="stylesheet" href="assets/css/login-page.css">
+    {{!-- /login-page.css End --}}
+</head>
+
+<body>
+    <section class="vh-100" style="background-color: #ecfdff;">
+        <div class="container-fluid h-custom">
+            <div style="padding-left: 9rem; padding-top: 1em;" >
+                <img src="assets\img\logo.png">
+            </div>
+            
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-9 col-xl-5">
+                    <img src="assets/img/banner_img.png"
+                        class="img-fluid" alt="Sample image">
+                </div>
+                <div class="col-md-3 col-lg-6 col-xl-4 offset-xl-1">
+                    <form action="/login" method="post">
+                        {{#if loginErr}}
+                        <p class="text-danger fw-bold ">{{loginErr}}</p>
+                        {{/if}}
+                        <div class="form-outline mb-4">
+                            <input type="email" id="email" class="form-control form-control-lg"
+                                placeholder="Email Id" name="email" onkeyup="validateEmail()"/>
+                            <label class="form-label" for="form3Example3">Email address</label>
+                            <p id="emailErr" class="text-danger"></p>
+                        </div>
+
+                        <!-- Password input -->
+                        <div class="form-outline mb-3">
+                            <input type="password" id="password" class="form-control form-control-lg " 
+                                placeholder="Password" name="password" onkeyup="validatePassword()"/>
+                            <label class="form-label" for="form3Example4">Password</label>
+                            <p id="passwordErr" class="text-danger"></p>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <!-- Checkbox -->
+                            {{!-- <div class="form-check mb-0">
+                                <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3"/>
+                                <label class="form-check-label" for="form2Example3">
+                                    Remember me
+                                </label> --}}
+                            {{!-- </div>
+                            <a href="#!" class=" text-danger">Forgot password?</a>
+                        </div> --}}
+
+                        <div class="text-center text-lg-start mt-4 pt-2">
+                            <button type="submit" class="btn btn-dark btn-lg" onclick="return validation()"
+                                style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+                            <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/signup"
+                                    class="link-info">Register</a></p>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <script>
+    
+    var errorEmail = document.getElementById('emailErr')
+    var errorPassword = document.getElementById('passwordErr')
+   
+    function validateEmail() {
+        const name = document.getElementById('email').value
+        if (name == "") {
+            errorEmail.innerHTML = "Enter you email address"
+            return false
+
+
+        }
+        if (!name.match(/^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/)) {
+            errorEmail.innerHTML = 'Enter a proper email adress'
+            return false
+        }
+
+        errorEmail.innerHTML = null
+        return true
+    }
+
+    function validatePassword() {
+        const name = document.getElementById('password').value
+        if (name == "") {
+            errorPassword.innerHTML = "Enter a password"
+            return false
+        }
+        if (name.length < 3) {
+            errorPassword.innerHTML = "Password should be  three characters"
+            return false
+        }
+        errorPassword.innerHTML = null
+        return true
+    }
+   
+
+
+    function validation() {
+        if (!validateEmail() || !validatePassword()) {
+            return false
+        }
+        return true
+    }
+</script>

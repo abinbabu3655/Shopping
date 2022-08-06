@@ -1,0 +1,100 @@
+
+<section class="cart_area padding_top" style="background-color:#ecfdff;">
+  <div class="container ">
+    <div class="cart_inner ">
+      <div class="table-responsive "
+        style="background-color: #ecfdff; border: 20px; border-radius:20px ; border-color: #fff;">
+        {{#if products}}
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Product</th>
+              <th scope="col">Price</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Subtotal</th>
+              {{!-- <th scope="col">SubTotal</th> --}}
+            </tr>
+          </thead>
+          <tbody>
+            {{#each subTotal}}
+            <tr>
+              <td class="d-flex" style="margin-left:50px ;">
+                <div class="media d-flex ">
+                  <div class="d-flex ">
+                    <img src="/product-images/{{this.product._id}}.jpg" alt="" style="width: 10em; height: 10em;" />
+                  </div>
+                  <div class="media-bod align-self-center">
+                    <p>{{this.product.productName}}</p>
+                  </div>
+                </div>
+              </td>
+
+              <td>
+                <div class="row">
+                  <h5>&#8360; {{this.product.price}} &nbsp;</h5>
+                  {{#if this.product.dPercentage}}
+                  <span class="badge badge-pill badge-light">{{this.product.dPercentage}}% Off</span>
+                  {{/if}}
+                </div>
+
+              </td>
+              <td style="text-align: center;">
+                <div class="product_count">
+                  <button class="cart-item-count mr-4  btn btn-info"
+                    onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user._id}}',-1)">-</button>
+                  <span style="width: 5em;" id="{{this.product._id}}">{{this.quantity}}</span><button
+                    class="cart-item-count ml-4 btn btn-info"
+                    onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user._id}}',1)">+</button>
+                </div>
+              </td>
+
+              <td style="text-align: center;">
+                <span id="subTotal">{{this.Subtotal}}</span>
+                {{/each}}
+
+
+              </td>
+
+
+              {{!-- <td>
+                <h5>-st</h5>
+              </td> --}}
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="font-weight-bolder" style="d-flex justify-content:left; ">
+                <span>Total price</span><br><br>
+                <span>You are Saved </h5><span><br><br>
+                    <span>Grand Total</span>
+              </td>
+              <td>
+                <s id="totalMrp" class="font-weight-bold">{{totalMrp}}</s><br><br>
+                <span>{{discount}}</span><br><br>
+                <span id="total" class="font-weight-bold">{{total}}</span><br>
+              </td>
+            </tr>
+
+            {{else}}
+            <div class="d-flex justify-content-center" style="padding-bottom: 15rem;">
+              <div style="width:20rem ;">
+                <img src="assets\img\emptycart.png">
+                <div style="margin-left:3em ;">
+                  <a class="btn_1" href="/shop">Add Products to Cart +</a>
+                </div>
+
+                {{/if}}
+
+          </tbody>
+        </table>
+        
+        <div class="checkout_btn_inner float-right pb-5 p-3">
+          {{#if products}}
+          <a class="btn_1" href="/shop">Continue Shopping</a>
+          <a class="btn_1 checkout_btn_1" href="/place-order">Proceed to checkout</a>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+</section>
+<!--================End Cart Area =================-->

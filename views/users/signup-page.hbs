@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    {{!-- login-page.css --}}
+    <link rel="stylesheet" href="assets/css/login-page.css">
+    {{!-- /login-page.css End --}}
+</head>
+
+<body style="background-color: #ecfdff;">
+    <section class="vh-100" >
+        <div class="container-fluid h-custom">
+            <div style="padding-left: 9rem; padding-top: 0.1em;" >
+                <img src="assets\img\logo.png">
+            </div>
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-9 col-xl-5">
+                       
+                    <img src="assets/img/banner_img.png"
+                        class="img-fluid" alt="Sample image">
+                </div>
+                <div class="col-md-3 col-lg-6 col-xl-4 offset-xl-1">
+                    <form class="mx-1 mx-md-4" action="/signup" method="post">
+
+                        <div>
+                              {{#if userexistErr}}
+                            <p class="text-danger">{{userexistErr}}</p>
+                            {{/if}}
+                        </div>
+                             
+                        <div class="d-flex flex-row align-items-center mb-4">
+                          
+
+
+                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                                <input type="text" id="name" class="form-control" name="name" placeholder="Name"
+                                    onkeyup="validateName()" />
+                                <label class="form-label" for="form3Example1c">Your Name</label>
+                                <p id="nameErr" class="text-danger"></p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                                <input type="email" id="email" class="form-control" name="email" placeholder="Email"
+                                    onkeyup="validateEmail()" />
+                                <label class="form-label" for="form3Example3c">Your Email</label>
+                                <p id="emailErr" class="text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                                <input type="tel" id="mob" class="form-control" name="mobile" onkeyup="validateMobile()" placeholder="Mobile Number" />
+                                <label class="form-label" for="form3Example4cd">Phone Number
+                                </label>
+                                <p id="numberErr" class="text-danger"></p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                                <input type="password" id="password" class="form-control" name="password" placeholder="Password"
+                                    onkeyup="validatePassword()" />
+                                <label class="form-label" for="form3Example4c">Password</label>
+                                <p id="passwordErr" class="text-danger"></p>
+
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                                <input type="password" id="cPassword" class="form-control" placeholder="Password"
+                                    onkeyup="validateCpassword()" />
+                                <label class="form-label" for="form3Example4cd">Confirm your
+                                    password</label>
+                                <p id="cPassworderr" class="text-danger"></p>
+                            </div>
+                        </div>
+
+
+                        <div class="d-flex justify-content-between mx-4 mb-3 mb-lg-4">
+                            <div class="d-flex">
+                                <button type="submit" class="btn btn-dark btn-lg"
+                                    onclick="return validation()">Register</button>
+                            </div>
+                            <div class="d-flex mt-2">
+                                <label class="form-check-label" for="form2Example3">
+                                    Already have an account <a href="/login" class="link-info">Login</a>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+        var errorName = document.getElementById('nameErr')
+        var errorEmail = document.getElementById('emailErr')
+        var errorPassword = document.getElementById('passwordErr')
+        var errorCPassword = document.getElementById('cPassworderr')
+        var errorMobileNumber = document.getElementById('numberErr')
+
+        function validateName() {
+            const name = document.getElementById('name').value
+
+            if (name == "") {
+                errorName.innerHTML = 'Enter your Name'
+                return false
+            }else if
+             (!name.match(/^[a-zA-Z]*$/)) {
+                errorName.innerHTML = 'Alphabets are only allowed'
+                return false
+            }
+            errorName.innerHTML = null
+            return true
+
+        }
+        function validateEmail() {
+            const name = document.getElementById('email').value
+            if (name == "") {
+                errorEmail.innerHTML = "Enter you email address"
+                return false
+
+
+            }else if 
+            (!name.match(/^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/)) {
+                errorEmail.innerHTML = 'Enter a proper email adress'
+                return false
+            }
+
+            errorEmail.innerHTML = null
+            return true
+        }
+
+        function validatePassword() {
+            const name = document.getElementById('password').value
+            if (name == "") {
+                errorPassword.innerHTML = "Enter a password"
+                return false
+            }
+            else if (name.length < 3) {
+                errorPassword.innerHTML = "Password should be  three characters"
+                return false
+            }
+            errorPassword.innerHTML = null
+            return true
+        }
+        function validateCpassword() {
+            const name = document.getElementById('cPassword').value
+            const cpassword = document.getElementById('password').value
+
+            if (name == "") {
+                errorCPassword.innerHTML = "Enter password"
+                return false
+            }
+            else if (name !== cpassword) {
+                errorCPassword.innerHTML = "Password does not match"
+                return false
+            }
+
+            errorCPassword.innerHTML = null
+            return true
+        }
+        function validateMobile() {
+            const name = document.getElementById('mob').value
+            if (name == "" || name == null) {
+                errorMobileNumber.innerHTML = "Enter a mobile number"
+                return false
+            }else if
+            (name.length < 10 || name.length > 10) {
+                errorMobileNumber.innerHTML = "Enter a Valid Mobile number"
+                return false
+            }
+
+            errorMobileNumber.innerHTML = null
+            return true
+        }
+        function validation() {
+            if (!validateName() || !validateEmail() || !validatePassword() || !validateCpassword() ||!validateMobile()) {
+                return false
+            }
+            return true
+        }
+    </script>

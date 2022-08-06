@@ -1,0 +1,556 @@
+<section style="background-color: #eee;" class="pt-5">
+    <div class="container pt-5 py-5">
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                            alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                        <h5 class="my-3">{{user.name}}</h5>
+
+
+                    </div>
+                </div>
+                <div class="card mb-4 mb-lg-0">
+                    <div class="card-body p-0">
+                        <ul class="list-group list-group-flush rounded-3">
+                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                <a class="" href="/orders">Orders</a>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                <a href="/user-address">Address</a>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                <a href="/change-password">Change Password</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Addresses</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                {{!-- <span aria-hidden="true">&times;</span> --}}
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="">
+                                <a href="" data-toggle="modal" data-target="#add-address">Add new address +</a>
+                                <hr>
+                            </div>
+                            {{#each Addresses}}
+                            <div class="card" style="width: 51em;">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">{{this.addresses.fName}}
+                                        {{this.addresses.lName}}
+                                    </h6>
+                                    <p>Mobile : {{this.addresses.number}}</p>
+                                    <p>Email : {{this.addresses.email}},</p>
+                                    <p>Add :
+                                        {{this.addresses.add1}},{{this.addresses.add2}},{{this.addresses.city}},{{this.addresses.district}},{{this.addresses.state}}
+                                    </p>
+                                    <p>Pincode :{{this.addresses.zip}}</p>
+                                    <div class="d-flex justify-content-around"></div>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#edit-address{{this.addresses._id}}">Edit</button>
+                                    <button type="button" class="btn btn-outline-danger"
+                                        onclick="deleteAddress('{{this.addresses._id}}','{{this._id}}')">Delete</button>
+                                </div>
+                            </div>
+                            <br>
+                            {{/each}}
+
+                            {{!-- <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div> --}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+</section>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="add-address" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Address</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-12">
+                    <form class="row contact_form" action='/add-address/{{user._id}}' method="post" id="add-addresss">
+                        <div class="col-md-6 form-group">
+                            <input type="text" class="form-control" id="fName" name="fName" placeholder="First name"
+                                onkeyup="validatefName()" />
+                            <p id="fnameerr" class="text-danger"></p>
+
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="lName" name="lName" placeholder="Last name"
+                                onkeyup="validatelName()" />
+                            <p id="lnameerr" class="text-danger"></p>
+
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="mob" name="number" placeholder="Mobile number"
+                                onkeyup="validateMobile()" />
+                            <p id="moberr" class="text-danger"></p>
+
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Email Address"
+                                onkeyup="validateEmail()" />
+                            <p id="emailerr" class="text-danger"></p>
+
+                        </div>
+
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="add1" name="add1" placeholder="Address line 01"
+                                onkeyup="validateAdd1()" />
+                            <p id="add1err" class="text-danger"></p>
+
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="add2" name="add2" placeholder="Address line 02"
+                                onkeyup="validateAdd2()" />
+                            <p id="add2err" class="text-danger"></p>
+
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="city" name="city" placeholder="Town/City"
+                                onkeyup="validateTown()" />
+                            <p id="cityerr" class="text-danger"></p>
+
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="district" name="district"
+                                onkeyup="validateDistrict()" placeholder="District" />
+                            <p id="districterr" class="text-danger"></p>
+
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="state" name="state" placeholder="State"
+                                onkeyup="validateState()" />
+                            <p id="stateerr" class="text-danger"></p>
+
+                        </div>
+
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="zip" name="zip" placeholder="Postcode/ZIP"
+                                onkeyup="validateZip()" />
+                            <p id="ziperr" class="text-danger"></p>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary" form="add-addresss"
+                    onclick="return validation()">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Modal -->
+{{#each Addresses}}
+<div class="modal fade" id="edit-address{{this.addresses._id}}" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Address</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body">
+                    <div class="col-lg-12">
+                        <form class="row contact_form" action="/edit-address/{{this.addresses._id}}" method="post"
+                            id="edit-addresss{{this.addresses._id}}">
+                            <input type="text" name="userId" id="" value="{{this._id}}" hidden>
+                            <div class="col-md-6 form-group">
+                                <input type="text" class="form-control" id="efName{{this.addresses._id}}" name="fName"
+                                    onkeyup="evalidatefName('{{this.addresses._id}}')" value="{{addresses.fName}}" placeholder="First name" />
+                                <p id="efnameerr{{this.addresses._id}}" class="text-danger"></p>
+
+
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <input type="text" class="form-control" id="elName{{this.addresses._id}}" name="lName"
+                                    onkeyup="evalidatelName('{{this.addresses._id}}')" value="{{addresses.lName}}" placeholder="Last Name" />
+                                <p id="elnameerr{{this.addresses._id}}" class="text-danger"></p>
+
+
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <input type="text" class="form-control" id="emob{{this.addresses._id}}" name="number"
+                                    onkeyup="evalidateMobile('{{this.addresses._id}}')" placeholder="Mobile" value="{{addresses.number}}" />
+                                <p id="emoberr{{this.addresses._id}}" class="text-danger"></p>
+
+
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <input type="text" class="form-control" id="eemail{{this.addresses._id}}" name="email"
+                                    onkeyup="evalidateEmail('{{this.addresses._id}}')" placeholder="Email" value="{{addresses.email}}" />
+                                <p id="eemailerr{{this.addresses._id}}" class="text-danger"></p>
+
+
+                            </div>
+
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="eadd1{{this.addresses._id}}" name="add1" onkeyup="evalidateAdd1('{{this.addresses._id}}')"
+                                    placeholder="Add1" value="{{addresses.add1}}" />
+                                <p id="eadd1err{{this.addresses._id}}" class="text-danger"></p>
+
+
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="eadd2{{this.addresses._id}}" name="add2" onkeyup="evalidateAdd2('{{this.addresses._id}}')"
+                                    placeholder="Add2" value="{{addresses.add2}}" />
+                                <p id="eadd2err{{this.addresses._id}}" class="text-danger"></p>
+
+
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="ecity{{this.addresses._id}}" name="city" onkeyup="evalidateTown('{{this.addresses._id}}')"
+                                    placeholder="City" value="{{addresses.city}}" />
+                                <p id="ecityerr{{this.addresses._id}}" class="text-danger"></p>
+
+
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <input type="text" class="form-control" id="edistrict{{this.addresses._id}}" name="district"
+                                    onkeyup="evalidateDistrict('{{this.addresses._id}}')" value="{{addresses.district}}"
+                                    placeholder="District" />
+                                <p id="edistricterr{{this.addresses._id}}" class="text-danger"></p>
+
+
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <input type="text" class="form-control" id="estate{{this.addresses._id}}" name="state"
+                                    onkeyup="evalidateState('{{this.addresses._id}}')" value="{{addresses.state}}" placeholder="State" />
+                                <p id="estateerr{{this.addresses._id}}" class="text-danger"></p>
+
+
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <input type="number" class="form-control" id="ezip{{this.addresses._id}}" name="zip" value="{{addresses.zip}}"
+                                    onkeyup="evalidateZip('{{this.addresses._id}}')" placeholder="Zip" />
+                                <p id="eziperr{{this.addresses._id}}" class="text-danger"></p>
+
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" form="edit-addresss{{this.addresses._id}}" onclick="return evalidation('{{this.addresses._id}}')" >Save
+                    changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{/each}}
+
+
+
+<script>
+    function evalidatefName(id) {
+        const messg = document.getElementById("efnameerr"+id)
+        const con = document.getElementById("efName"+id).value
+        if (con == "") {
+            messg.innerHTML = "| Fill The Fields"
+            return false;
+        }
+        if (!con.match(/^[a-zA-Z-" "]*$/)) {
+            messg.innerHTML = "| Only Alphabets Are Allowed"
+            return false;
+        }
+        messg.innerHTML = ""
+        return true;
+    }
+    function evalidatelName(id) {
+        const messg = document.getElementById("elnameerr"+id)
+        const con = document.getElementById("elName"+id).value
+        if (con == "") {
+            messg.innerHTML = "| Fill The Fields"
+            return false;
+        }
+        if (!con.match(/^[a-zA-Z-" "]*$/)) {
+            messg.innerHTML = "| Only Alphabets Are Allowed"
+            return false;
+        }
+        messg.innerHTML = ""
+        return true;
+    }
+    function evalidateMobile(id) {
+        const messg = document.getElementById("emoberr"+id)
+        const name = document.getElementById('emob'+id).value
+        if (name == "" || name == null) {
+            messg.innerHTML = "Enter a mobile number"
+            return false
+        } else if
+            (name.length < 10 || name.length > 10) {
+            messg.innerHTML = "Enter a Valid Mobile number"
+            return false
+        }
+
+        messg.innerHTML = null
+        return true
+    }
+    function evalidateEmail(id) {
+        const messg = document.getElementById("eemailerr"+id)
+        const name = document.getElementById('eemail'+id).value
+        if (name == "") {
+            messg.innerHTML = "Enter you email address"
+            return false
+
+
+        } else if
+            (!name.match(/^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/)) {
+            messg.innerHTML = 'Enter a proper email adress'
+            return false
+        }
+
+        messg.innerHTML = null
+        return true
+    }
+    function evalidateAdd1(id) {
+        const messg = document.getElementById("eadd1err"+id)
+        const con = document.getElementById("eadd1"+id).value
+        if (con == "") {
+            messg.innerHTML = "| Fill The Fields"
+            return false;
+        }
+        messg.innerHTML = ""
+        return true;
+    }
+    function evalidateAdd2(id) {
+        const messg = document.getElementById("eadd2err"+id)
+        const con = document.getElementById("eadd2"+id).value
+        if (con == "") {
+            messg.innerHTML = "| Fill The Fields"
+            return false;
+        }
+        messg.innerHTML = ""
+        return true;
+    }
+
+    function evalidateTown(id) {
+        const messg = document.getElementById("ecityerr"+id)
+        const con = document.getElementById("ecity"+id).value
+        if (con == "") {
+            messg.innerHTML = "| Fill The Fields"
+            return false;
+        }
+        messg.innerHTML = ""
+        return true;
+    }
+    function evalidateDistrict(id) {
+        const messg = document.getElementById("edistricterr"+id)
+        const con = document.getElementById("edistrict"+id).value
+        if (con == "") {
+            messg.innerHTML = "Enter District"
+            return false;
+        }
+        messg.innerHTML = ""
+        return true;
+    }
+    function evalidateState(id) {
+        const messg = document.getElementById("estateerr"+id)
+        const con = document.getElementById("estate"+id).value
+        if (con == "") {
+            messg.innerHTML = "Enter State"
+            return false;
+        }
+        messg.innerHTML = ""
+        return true;
+    }
+
+    function evalidateZip(id) {
+        const messg = document.getElementById("eziperr"+id)
+        const name = document.getElementById('ezip'+id).value
+        if (name == "" || name == null) {
+            messg.innerHTML = "Enter Pincode"
+            return false
+        } else if
+            (name.length < 6 || name.length > 6) {
+            messg.innerHTML = "Enter a Valid Pincode"
+            return false
+        }
+
+        messg.innerHTML = null
+        return true
+    }
+    function evalidation(id) {
+        if (!evalidatefName(id) || !evalidatelName(id) || !evalidateMobile(id) || !evalidateEmail(id) || !evalidateAdd1(id) || !evalidateAdd2(id) || !evalidateTown(id) || !evalidateDistrict(id) || !evalidateState(id) || !evalidateZip(id)) {
+            return false;
+        }
+        return true;
+    }
+
+
+</script>
+
+
+<script>
+    function validatefName() {
+        const messg = document.getElementById("fnameerr")
+        const con = document.getElementById("fName").value
+        if (con == "") {
+            messg.innerHTML = "| Fill The Fields"
+            return false;
+        }
+        if (!con.match(/^[a-zA-Z-" "]*$/)) {
+            messg.innerHTML = "| Only Alphabets Are Allowed"
+            return false;
+        }
+        messg.innerHTML = ""
+        return true;
+    }
+    function validatelName() {
+        const messg = document.getElementById("lnameerr")
+        const con = document.getElementById("lName").value
+        if (con == "") {
+            messg.innerHTML = "| Fill The Fields"
+            return false;
+        }
+        if (!con.match(/^[a-zA-Z-" "]*$/)) {
+            messg.innerHTML = "| Only Alphabets Are Allowed"
+            return false;
+        }
+        messg.innerHTML = ""
+        return true;
+    }
+    function validateMobile() {
+        const messg = document.getElementById("moberr")
+        const name = document.getElementById('mob').value
+        if (name == "" || name == null) {
+            messg.innerHTML = "Enter a mobile number"
+            return false
+        } else if
+            (name.length < 10 || name.length > 10) {
+            messg.innerHTML = "Enter a Valid Mobile number"
+            return false
+        }
+
+        messg.innerHTML = null
+        return true
+    }
+    function validateEmail() {
+        const messg = document.getElementById("emailerr")
+        const name = document.getElementById('email').value
+        if (name == "") {
+            messg.innerHTML = "Enter you email address"
+            return false
+
+
+        } else if
+            (!name.match(/^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/)) {
+            messg.innerHTML = 'Enter a proper email adress'
+            return false
+        }
+
+        messg.innerHTML = null
+        return true
+    }
+    function validateAdd1() {
+        const messg = document.getElementById("add1err")
+        const con = document.getElementById("add1").value
+        if (con == "") {
+            messg.innerHTML = "| Fill The Fields"
+            return false;
+        }
+        messg.innerHTML = ""
+        return true;
+    }
+    function validateAdd2() {
+        const messg = document.getElementById("add2err")
+        const con = document.getElementById("add2").value
+        if (con == "") {
+            messg.innerHTML = "| Fill The Fields"
+            return false;
+        }
+        messg.innerHTML = ""
+        return true;
+    }
+
+    function validateTown() {
+        const messg = document.getElementById("cityerr")
+        const con = document.getElementById("city").value
+        if (con == "") {
+            messg.innerHTML = "| Fill The Fields"
+            return false;
+        }
+        messg.innerHTML = ""
+        return true;
+    }
+    function validateDistrict() {
+        const messg = document.getElementById("districterr")
+        const con = document.getElementById("district").value
+        if (con == "") {
+            messg.innerHTML = "Enter District"
+            return false;
+        }
+        messg.innerHTML = ""
+        return true;
+    }
+    function validateState() {
+        const messg = document.getElementById("stateerr")
+        const con = document.getElementById("state").value
+        if (con == "") {
+            messg.innerHTML = "Enter State"
+            return false;
+        }
+        messg.innerHTML = ""
+        return true;
+    }
+
+    function validateZip() {
+        const messg = document.getElementById("ziperr")
+        const name = document.getElementById('zip').value
+        if (name == "" || name == null) {
+            messg.innerHTML = "Enter Pincode"
+            return false
+        } else if
+            (name.length < 6 || name.length > 6) {
+            errorMobileNumber.innerHTML = "Enter a Valid Pincode"
+            return false
+        }
+
+        messg.innerHTML = null
+        return true
+    }
+    function validation() {
+        if (!validatefName() || !validatelName() || !validateMobile() || !validateEmail() || !validateAdd1() || !validateAdd2() || !validateTown() || !validateDistrict() || !validateState() || !validateZip()) {
+            return false;
+        }
+        return true;
+    }
+
+
+</script>
