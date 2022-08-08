@@ -250,7 +250,7 @@
                     if (response.codSuccess) {
 
                         swal('Order Placed').then(() => {
-                            location.href = "http://localhost:3000/order-success"
+                            location.href = "https://abinbabu.com/order-success"
                         })
                     } else if (response.onlineSuccess) {
                         razorpayPayment(response.response)
@@ -312,7 +312,7 @@
                 success: (response) => {
                     if (response.status) {
                         swal('Order Placed').then(() => {
-                            location.href = "http://localhost:3000/order-success"
+                            location.href = "https://abinbabu.com/order-success"
 
                         })
                     } else {
